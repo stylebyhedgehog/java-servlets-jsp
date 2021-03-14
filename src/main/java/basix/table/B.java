@@ -66,9 +66,6 @@ public class B extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("columns").matches("\\d+")){
             processRequest(request, response);
         }
@@ -78,5 +75,9 @@ public class B extends HttpServlet {
             response.setStatus(512);
             dispatcher.forward(request, response);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

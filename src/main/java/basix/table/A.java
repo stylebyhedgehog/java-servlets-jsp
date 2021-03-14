@@ -23,7 +23,7 @@ public class A extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(
                     "<h2>"+message+"</h2>"
-                    +"<form action=B method=GET>"
+                    +"<form action=B method=POST>"
                     + "<input type=text name=rows value=\"Строки\"><br>"
                     + "<input type=text name=columns value=\"Столбцы\">"
                     + "<input type=submit name=s1 value=Ok>"

@@ -11,7 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  <a href="uploadToDb.jsp">uploadtodb </a>
+  <a href="filmsMainPage.jsp">AllFilms </a>
   <a href="SendPicture.jsp">pictures</a>
   <a href="/AuthentityServlet">AuthentityServlet</a>
   <a href="/admin.html">FilterAuthentification</a>

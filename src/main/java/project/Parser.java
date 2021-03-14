@@ -1,52 +1,45 @@
 package project;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import project.Model.Film;
+
 import java.util.ArrayList;
 
 public class Parser {
 
-    private  ResultSet resultSet;
-    public Parser(ResultSet resultSet) throws SQLException, ClassNotFoundException {
-        this.resultSet =resultSet;
+    private  ArrayList<Film> films;
+    public Parser(ArrayList<Film> films) {
+        this.films =films;
     }
 
-    public  String toHtmlTable() throws SQLException {
-        StringBuilder out= new StringBuilder("<table border=2 bgcolor=yellow>");
-        while (resultSet.next()) {
+    public  String toHtmlTable()  {
+        StringBuilder out= new StringBuilder("<table border=2");
+        for (Film film : films){
             out.append("<tr> <td>")
-                    .append(resultSet.getString("title"))
+                    .append("<a href=http://localhost:8081/film?id="+film.getId().toString()+">"+film.getTitle()+"</a>")
                     .append("</td>").append("<td>")
-                    .append(resultSet.getString("description"))
+                    .append(film.getDescription())
                     .append("</td></tr>");
         }
         out.append("</table>");
         return out.toString();
     }
 
-    public String toHtmlCombo() throws SQLException{
-        StringBuilder s = new StringBuilder();
-        s.append("<select>");
-
-        while (resultSet.next()) {
-            s.append("<option>");
-            s.append(resultSet.getString("title"));
-            s.append("</option>");
+    public String toHtmlCombo(){
+        StringBuilder out = new StringBuilder();
+        out.append("<select>");
+        for (Film film : films){
+            out.append("<tr> <td>")
+                    .append("<option>")
+                    .append(film.getTitle())
+                    .append("</option>");
         }
-
-        s.append("</select>");
-        return s.toString();
+        out.append("</select>");
+        return out.toString();
     }
 
-    public  ArrayList<Film> toObjectArrayList() throws SQLException {
-        ArrayList<Film> arrayList =new ArrayList<Film>();
-        Film film =new Film();
-        while (resultSet.next()) {
-            film.setId(Integer.parseInt(resultSet.getString("id")));
-            film.setTitle(resultSet.getString("title"));
-            film.setDescription(resultSet.getString("description"));
-            arrayList.add(film);
-        }
-        return arrayList;
+    public  String toJson() {
+
+        return "";
     }
 }
