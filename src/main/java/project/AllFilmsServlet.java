@@ -15,19 +15,16 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet("/films")
+@WebServlet("/app/films")
 public class AllFilmsServlet extends HttpServlet {
 
     public void getFilms(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        // print form
 
-        //get connection -> get quantity from form -> filmArrayList from db
         FilmDAO filmDAO=new FilmDAO();
         ArrayList<Film> filmArrayList=filmDAO.readAll();
 
-        //parse ArrayList to htmltable & print
         Parser parser = new Parser(filmArrayList);
         out.println(parser.toHtmlTable());
     }
@@ -35,10 +32,8 @@ public class AllFilmsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             getFilms(req,resp);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

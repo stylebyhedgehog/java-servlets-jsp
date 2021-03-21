@@ -13,9 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet("/film")
+@WebServlet("/app/film")
 public class FilmPageServlet extends HttpServlet {
     Film film;
+    FilmDAO filmDAO;
     private void editForm(PrintWriter out) throws IOException, SQLException, ClassNotFoundException {
         out.println(
                 "<form method=\"post\" action=\"film\" >\n" +
@@ -35,25 +36,24 @@ public class FilmPageServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        FilmDAO filmDAO = new FilmDAO();
+        filmDAO = new FilmDAO();
         Film film= filmDAO.readOne(Integer.parseInt(request.getParameter("id")));
         this.film=film;
-        out.println("<img src=\"ShowImage?id="+request.getParameter("id")+"\">" );
+        out.println("<img src=\"/app/ShowImage?id="+request.getParameter("id")+"\">" );
         out.println("<h1>"+ film.getTitle()+"</h1>");
         out.println("<h1>"+ film.getDescription()+"</h1>");
         editForm(out);
         deleteForm(out);
     }
+
     private void updateFilmData(HttpServletRequest request) throws SQLException, ClassNotFoundException {
-        FilmDAO filmDAO=new FilmDAO();
         this.film.setTitle(request.getParameter("title"));
         this.film.setDescription(request.getParameter("description"));
-
-        filmDAO.update(this.film);
+        this.filmDAO.update(this.film);
     }
+
     private void deleteFilmData(HttpServletRequest request) throws SQLException, ClassNotFoundException {
-        FilmDAO filmDAO=new FilmDAO();
-        filmDAO.delete(this.film);
+        this.filmDAO.delete(this.film);
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
@@ -64,17 +64,16 @@ public class FilmPageServlet extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             if (req.getParameter("mtype").equals("delete")){
                 deleteFilmData(req);
-                resp.sendRedirect(req.getContextPath() + "/films");
+                resp.sendRedirect(req.getContextPath() + "/app/films");
             }
             if (req.getParameter("mtype").equals("update")){
                 updateFilmData(req);
-                resp.sendRedirect(req.getContextPath() + "/film?id="+this.film.getId().toString());
+                resp.sendRedirect(req.getContextPath() + "/app/film?id="+this.film.getId().toString());
             }
 
         } catch (SQLException | ClassNotFoundException throwables) {

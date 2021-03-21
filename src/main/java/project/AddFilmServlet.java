@@ -18,7 +18,7 @@ import java.sql.SQLException;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
-@WebServlet("/add_film")
+@WebServlet("/app/create")
 public class AddFilmServlet extends HttpServlet {
 
     private String saveImage(HttpServletRequest request) throws IOException, ServletException {
@@ -31,23 +31,21 @@ public class AddFilmServlet extends HttpServlet {
         return uploadPath + File.separator + fileName;
     }
 
-    private void producer(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, IOException, ServletException {
-        // create film
+    private void addFilm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, IOException, ServletException {
         FilmDAO filmDAO=new FilmDAO();
         String title =request.getParameter("title");
         String description =request.getParameter("description");
         String path=saveImage(request);
         Film film=new Film(null,title,description,path);
         Integer id_film=filmDAO.create(film);
-        //create image to film
-        response.sendRedirect(request.getContextPath() + "/film?id="+id_film.toString());
+        response.sendRedirect(request.getContextPath() + "/app/film?id="+id_film.toString());
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println(
-                "<form method=\"post\" action=\"add_film\" enctype=\"multipart/form-data\">\n" +
+                "<form method=\"post\" action=\"create\" enctype=\"multipart/form-data\">\n" +
                 "    <input name=title type=\"text\"/>\n" +
                 "    <input name=\"description\" type=\"text\"/>\n" +
                 "    <input type=\"file\" name=\"file\" />\n" +
@@ -58,7 +56,7 @@ public class AddFilmServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            producer(request, response);
+            addFilm(request, response);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }

@@ -16,7 +16,7 @@ public class Parser {
         StringBuilder out= new StringBuilder("<table border=2");
         for (Film film : films){
             out.append("<tr> <td>")
-                    .append("<a href=http://localhost:8081/film?id="+film.getId().toString()+">"+film.getTitle()+"</a>")
+                    .append("<a href=http://localhost:8081/app/film?id="+film.getId().toString()+">"+film.getTitle()+"</a>")
                     .append("</td>").append("<td>")
                     .append(film.getDescription())
                     .append("</td></tr>");

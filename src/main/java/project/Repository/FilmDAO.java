@@ -72,7 +72,6 @@ public class FilmDAO {
 
         if(id_film_set.next()) {
             id_film=id_film_set.getInt(1);
-
         }
         return id_film;
     }
