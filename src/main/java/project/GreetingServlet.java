@@ -2,6 +2,7 @@ package project;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,5 +18,9 @@ public class GreetingServlet extends HttpServlet {
         out.println("welcome");
         out.println("<a href=http://localhost:8081/app/films>All</a>");
         out.println("<a href=http://localhost:8081/app/create>New</a>");
+        Cookie[] cookies = req.getCookies();
+        for (Cookie cookie: cookies){
+            out.println(cookie.getName()+ " "+ cookie.getValue());
+        }
     }
 }

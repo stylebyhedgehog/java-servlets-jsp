@@ -6,6 +6,7 @@ import project.Repository.FilmDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +43,7 @@ public class FilmPageServlet extends HttpServlet {
         out.println("<img src=\"/app/ShowImage?id="+request.getParameter("id")+"\">" );
         out.println("<h1>"+ film.getTitle()+"</h1>");
         out.println("<h1>"+ film.getDescription()+"</h1>");
+
         editForm(out);
         deleteForm(out);
     }
