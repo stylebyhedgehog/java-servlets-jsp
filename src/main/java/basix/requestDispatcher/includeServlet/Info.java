@@ -16,7 +16,7 @@ public class Info extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            out.println("SPECIAL Info Servlet FOR INCLUDING");
+            out.println(request.getParameter("action"));
         } finally {
             // out.close(); Важно! закомментарить, иначе не будет включено
         }

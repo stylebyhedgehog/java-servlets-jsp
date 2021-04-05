@@ -1,5 +1,6 @@
 package project.auth;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ public class Logout  extends HttpServlet {
         session.removeAttribute("password");
         session.removeAttribute("login");
         session.removeAttribute("role");
-
-        resp.sendRedirect(super.getServletContext().getContextPath()+"/login");
+        RequestDispatcher rd = req.getRequestDispatcher("login");
+        rd.forward(req, resp);
     }
 }

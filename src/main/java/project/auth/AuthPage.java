@@ -2,6 +2,7 @@ package project.auth;
 
 import project.Repository.ClientDAO;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import static java.util.Objects.nonNull;
 
 @WebServlet("/login")
 public class AuthPage extends HttpServlet {
+    private String login;
     private String form(){
         return "  <form method=\"post\" action=\"login\">\n" +
                 "<input type=\"text\" required placeholder=\"login\" name=\"login\"><br>\n" +
@@ -45,6 +47,7 @@ public class AuthPage extends HttpServlet {
             req.getSession().setAttribute("password", password);
             req.getSession().setAttribute("login", login);
             req.getSession().setAttribute("role", role);
+            this.login=login;
             flag=true;
         }
         return flag;
@@ -53,15 +56,17 @@ public class AuthPage extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             if (auth(req,resp)){
-                resp.sendRedirect(req.getContextPath() + "/greeting");
+
+            resp.sendRedirect(req.getContextPath() + "/greeting");
             }
             else {
                 doGet(req,resp);
+
             }
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-        ;
+
     }
 
     @Override
@@ -69,5 +74,5 @@ public class AuthPage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println(form());
-    }
+       }
 }

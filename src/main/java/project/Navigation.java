@@ -10,19 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/greeting")
-public class GreetingServlet extends HttpServlet {
+@WebServlet("/navigation")
+public class Navigation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.println("welcome");
-        RequestDispatcher rd = req.getRequestDispatcher("navigation");
-        rd.include(req, resp);
 
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie: cookies){
-            out.println(cookie.getName()+ " "+ cookie.getValue());
-        }
-    }
+        out.println("<a href=http://localhost:8081/app/films>All</a>");
+        out.println("<a href=http://localhost:8081/app/create>New</a>");
+
+}
 }

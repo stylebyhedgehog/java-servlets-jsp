@@ -20,6 +20,7 @@ public class IncludeInfo extends HttpServlet {
                 "And waiting for '?action=include' or '?action=forward' parameter input ...<br><br>");
         String action = request.getParameter("action");
         System.out.println("action="+action);
+
         if (action != null) {
             RequestDispatcher rd = request.getRequestDispatcher("info");
             if ("include".equalsIgnoreCase(action)) {
