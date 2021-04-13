@@ -38,6 +38,10 @@ public class FilmPageServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         filmDAO = new FilmDAO();
+
+        Wrapper wrapper=new Wrapper(request);
+        out.println("<h1>"+wrapper.getParameter("id")+"</h1>");
+
         Film film= filmDAO.readOne(Integer.parseInt(request.getParameter("id")));
         this.film=film;
         out.println("<img src=\"/app/ShowImage?id="+request.getParameter("id")+"\">" );
